@@ -12,7 +12,7 @@ function App() {
     { "text": "Ээээ" },
     { "text": "Посмотрим" },
     { "text": "Не знаю" },
-    { "text": "..." },
+    { "text": "Я занят" },
     { "text": "Хз" },
     { "text": "Увидим" },
   ];
@@ -29,11 +29,22 @@ function App() {
   // Функия проверяет, не пустое ли сообщение, после чего добавляет в массив message с указанием, что ввел пользователь
   const handleSendMessage = () => {
     if (userAnswer.trim()) {
-      setMessages([...messages, { text: userAnswer, sender: 'user' }]);
+      // Добавляем сообщение пользователя и временное сообщение "..."
+      setMessages([...messages, { text: userAnswer, sender: 'user' }, { text: '...', sender: 'bot' }]);
       // Вызывает getRandomAnswer для получения случайного ответа бота и добавляет его 
       // в массив messages с указанием, что отправитель — bot.
-      const botResponse = getRandomAnswer();
-      setMessages(prevMessages => [...prevMessages, { text: botResponse, sender: 'bot' }])
+
+      //обрачиваем функцию в сетТаймаут, чтобы бот отвечал с задержкой
+      setTimeout(() => {
+        const botResponse = getRandomAnswer();
+        setMessages(prevMessages => {
+          // Удаляем последнее сообщение "..." и добавляем реальный ответ
+          const updatedMessages = [...prevMessages];
+          updatedMessages.pop(); // Удаляем "..."
+          return [...updatedMessages, { text: botResponse, sender: 'bot' }];
+        });
+      }, 1500); // а тут пишется задержка 1500 миллисекунд (1.5 секунды)
+
       // Очищает поле ввода, сбрасывая userAnswer в пустую строку.
       setUserAnswer('');
     }
