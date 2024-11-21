@@ -36,7 +36,13 @@ function App() {
 
       //обрачиваем функцию в сетТаймаут, чтобы бот отвечал с задержкой
       setTimeout(() => {
-        const botResponse = getRandomAnswer();
+        let botResponse;
+        if (userAnswer.trim().toLowerCase() === 'сосал?') {
+          botResponse = 'Да'
+        } else {
+          botResponse = getRandomAnswer();
+        }
+
         setMessages(prevMessages => {
           // Удаляем последнее сообщение "..." и добавляем реальный ответ
           const updatedMessages = [...prevMessages];
@@ -60,15 +66,16 @@ function App() {
           </div>
         ))}
       </div>
-      <textarea
-        name="message"
-        id="message"
-        placeholder="Задай любой вопрос..."
-        value={userAnswer}
-        // 'e' это объект события
-        onChange={(e) => setUserAnswer(e.target.value)}
-      ></textarea>
-      <button onClick={handleSendMessage}>Отправить</button>
+      <div className='input-container'>
+        <textarea
+          name="message"
+          id="message"
+          placeholder="Задай любой вопрос..."
+          value={userAnswer}
+          onChange={(e) => setUserAnswer(e.target.value)}
+        ></textarea>
+        <button className='send-button' onClick={handleSendMessage}>&#9654;</button>
+      </div>
     </div>
   );
 }
