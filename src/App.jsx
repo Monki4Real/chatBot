@@ -39,7 +39,11 @@ function App() {
         let botResponse;
         if (userAnswer.trim().toLowerCase() === 'сосал?') {
           botResponse = 'Да'
-        } else {
+        }
+        else if (userAnswer.trim().toLowerCase() === 'какой долг у максима?') {
+          botResponse = 'ꝏ рублей'
+        }
+        else {
           botResponse = getRandomAnswer();
         }
 
@@ -72,7 +76,13 @@ function App() {
           id="message"
           placeholder="Задай любой вопрос..."
           value={userAnswer}
-          onChange={(e) => setUserAnswer(e.target.value)}
+          onChange={(event) => setUserAnswer(event.target.value)}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter' && !event.shiftKey) {
+              event.preventDefault(); // не добавляется новая строка
+              handleSendMessage();
+            }
+          }}
         ></textarea>
         <button className='send-button' onClick={handleSendMessage}>&#9654;</button>
       </div>

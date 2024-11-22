@@ -80,24 +80,23 @@ textarea {
   padding-right: 40px;
   line-height: 40px;
   resize: none;
+  overflow: hidden;
 }
 
 .send-button {
   position: absolute;
   right: 15px;
-  /* Располагаем кнопку ближе к тексту */
   bottom: 15px;
-  /* Располагаем кнопку ближе к нижней части textarea */
   background: none;
   border: none;
   font-size: 24px;
   cursor: pointer;
   color: #333;
+  transition: transform 0.2s;
 }
 
 button:hover {
   background-color: transparent;
-  /* Убираем фон при наведении */
   color: #0056b3;
-  /* Изменяем цвет текста при наведении */
+  transform: scale(1.2);
 }
